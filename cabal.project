@@ -1,0 +1,17 @@
+index-state: 2022-02-09T00:00:00Z
+
+with-compiler: ghc-8.10.7
+
+packages: plutus-hello-world.cabal
+
+-- We never, ever, want this.
+write-ghc-environment-files: never
+
+source-repository-package
+  type: git
+  location: https://github.com/input-output-hk/plutus.git
+  subdir:
+    plutus-core
+    plutus-tx
+    plutus-tx-plugin
+    prettyprinter-configurable

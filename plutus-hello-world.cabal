@@ -21,16 +21,28 @@ maintainer:         x@rvcas.dev
 -- category:
 extra-source-files: CHANGELOG.md
 
-library
-  hs-source-dirs:   src
-  build-depends:    plutus-tx
+common lang
   default-language: Haskell2010
+  build-depends:    base ^>=4.14.3.0
   ghc-options:
     -Wall -fobject-code -fno-ignore-interface-pragmas
     -fno-omit-interface-pragmas -fno-strictness -fno-spec-constr
     -fno-specialise
 
+library
+  import:          lang
+  exposed-modules:
+    Hello.Contract
+    Hello.Utils
+
+  hs-source-dirs:  src
+  build-depends:
+    , cardano-api
+    , plutus-ledger-api
+    , plutus-tx
+
 executable plutus-hello-world
+  import:           lang
   main-is:          Main.hs
 
   -- Modules included in this executable, other than Main.
@@ -38,6 +50,7 @@ executable plutus-hello-world
 
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
-  build-depends:    base ^>=4.14.3.0
   hs-source-dirs:   app
   default-language: Haskell2010
+  ghc-options:      -Wall -Werror -threaded -rtsopts -with-rtsopts=-T
+  build-depends:    plutus-hello-world

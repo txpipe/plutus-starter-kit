@@ -1,6 +1,7 @@
 module Main where
 
-import Hello.Contract
+import Options.Applicative
+import qualified Hello.Utils as Utils
 
 type Opts = FilePath
 
@@ -10,4 +11,4 @@ opts =
    in info (parseOpts <**> helper) . mconcat $ [fullDesc, progDesc "Create a smart contract for bulk purchases"]
 
 main :: IO ()
-main = execParser opts >>= writePlutusFile
+main = execParser opts >>= Utils.writePlutusFile

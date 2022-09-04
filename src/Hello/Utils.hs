@@ -1,28 +1,22 @@
+{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 
 module Hello.Utils (writePlutusFile) where
 
-import qualified Ledger.Typed.Scripts as Scripts
-
--------------------------------------------------------------------------------
--- Entry Points
--------------------------------------------------------------------------------
-
-swapWrapped :: BuiltinData -> BuiltinData -> BuiltinData -> ()
-swapWrapped = wrap swapValidator
-
-validator :: Scripts.Validator
-validator = mkValidatorScript $$(PlutusTx.compile [||swapWrapped||])
-
-swap :: PlutusScript PlutusScriptV1
-swap = PlutusScriptSerialised . SBS.toShort . LB.toStrict . serialise $ validator
-
-swapHash :: ValidatorHash
-swapHash = validatorHash validator
+import qualified Cardano.Api as Api
+-- Contracts
+import qualified Hello.Contract as Contract
+--
+import PlutusTx.Prelude (Either (..), Maybe (Nothing), ($), (++), (>>=))
+import System.FilePath
+import Prelude (IO, print, putStrLn)
 
 writePlutusFile :: FilePath -> IO ()
 writePlutusFile filePath =
-  Api.writeFileTextEnvelope filePath Nothing swap >>= \case
+  Api.writeFileTextEnvelope (filePath ++ ".json") Nothing Contract.serialized >>= \case
     Left err -> print $ Api.displayError err
     Right () -> putStrLn $ "wrote NFT validator to file " ++ filePath

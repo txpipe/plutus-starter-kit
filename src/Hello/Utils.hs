@@ -3,7 +3,8 @@
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE NoImplicitPrelude #-}
+
+-- {-# LANGUAGE NoImplicitPrelude #-}
 
 module Hello.Utils (writePlutusFile) where
 
@@ -17,6 +18,6 @@ import Prelude (IO, print, putStrLn)
 
 writePlutusFile :: FilePath -> IO ()
 writePlutusFile filePath =
-  Api.writeFileTextEnvelope (filePath ++ ".json") Nothing Contract.serialized >>= \case
+  Api.writeFileTextEnvelope filePath Nothing Contract.serialized >>= \case
     Left err -> print $ Api.displayError err
-    Right () -> putStrLn $ "wrote NFT validator to file " ++ filePath
+    Right () -> putStrLn $ "wrote validator to file " ++ filePath

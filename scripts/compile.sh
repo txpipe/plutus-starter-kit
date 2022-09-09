@@ -4,7 +4,7 @@ mainDir=$thisDir/..
 
 cd $mainDir
 
-cabal run plutus-hello-world -- assets/contract.plutus
+cabal run plutus-starter-kit -- assets/contract.plutus
 
 cardano-cli address build \
   --payment-script-file $mainDir/assets/contract.plutus \

@@ -1,5 +1,5 @@
 cabal-version:      2.4
-name:               plutus-hello-world
+name:               plutus-starter-kit
 version:            0.1.0.0
 
 -- A short (one-line) description of the package.
@@ -47,7 +47,7 @@ library
     , plutus-tx-plugin
     , serialise
 
-executable plutus-hello-world
+executable plutus-starter-kit
   import:           lang
   main-is:          Main.hs
 
@@ -61,4 +61,4 @@ executable plutus-hello-world
   ghc-options:      -Wall -Werror -threaded -rtsopts -with-rtsopts=-T
   build-depends:
     , optparse-applicative
-    , plutus-hello-world
+    , plutus-starter-kit

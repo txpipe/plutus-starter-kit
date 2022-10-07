@@ -7,11 +7,11 @@ cd $mainDir
 cabal run plutus-starter-kit -- assets/contract.plutus
 
 cardano-cli address build \
-  --payment-script-file $mainDir/assets/contract.plutus \
+  --payment-script-file ./assets/contract.plutus \
   --mainnet \
-  --out-file $mainDir/assets/mainnet.addr
+  --out-file ./assets/mainnet.addr
 
 cardano-cli address build \
-  --payment-script-file $mainDir/assets/contract.plutus \
+  --payment-script-file ./assets/contract.plutus \
   --testnet-magic 1097911063 \
-  --out-file $mainDir/assets/testnet.addr
+  --out-file ./assets/testnet.addr

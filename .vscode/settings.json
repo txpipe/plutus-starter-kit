@@ -1,3 +1,4 @@
 {
-    "haskell.manageHLS": "PATH"
+    "haskell.manageHLS": "PATH",
+    "task.allowAutomaticTasks": "on"
 }

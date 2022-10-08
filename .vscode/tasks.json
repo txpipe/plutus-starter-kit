@@ -8,9 +8,6 @@
         "options": {
           "cwd": "${workspaceFolder}"
         },
-        "runOptions": {
-          "runOn": "folderOpen"
-        },
         "presentation": {
           "panel": "shared",
           "group": "cabal"
@@ -22,6 +19,9 @@
         "args": ["build"],
         "options": {
           "cwd": "${workspaceFolder}"
+        },
+        "runOptions": {
+          "runOn": "folderOpen"
         },
         "presentation": {
           "panel": "shared",

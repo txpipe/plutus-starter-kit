@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Cabal Update",
+        "command": "cabal",
+        "args": ["update"],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "runOptions": {
+          "runOn": "folderOpen"
+        },
+        "presentation": {
+          "panel": "shared",
+          "group": "cabal"
+        }
+      },
+      {
+        "label": "Cabal Build",
+        "command": "cabal",
+        "args": ["build"],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "presentation": {
+          "panel": "shared",
+          "group": "cabal"
+        },
+        "dependsOn": ["Cabal Update"]
+      },
+      {
+        "label": "Serialize to UPLC",
+        "command": "cabal",
+        "args": ["run", "plutus-starter-kit", "--", "assets/contract.plutus"],
+        "presentation": {
+          "panel": "shared",
+          "group": "cabal"
+        },
+        "dependsOn": ["Cabal Build"]
+      }
+    ]
+  }

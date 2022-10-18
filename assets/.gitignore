@@ -1,0 +1,6 @@
+*.skey
+*.vkey
+wallet1.addr
+*.tx
+*.tx-signed
+pparams.json

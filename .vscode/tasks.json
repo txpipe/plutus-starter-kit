@@ -30,7 +30,7 @@
         "dependsOn": ["Cabal Update"]
       },
       {
-        "label": "Serialize to UPLC",
+        "label": "Compile Contract",
         "command": "cabal",
         "args": ["run", "plutus-starter-kit", "--", "assets/contract.plutus"],
         "presentation": {
@@ -38,6 +38,39 @@
           "group": "cabal"
         },
         "dependsOn": ["Cabal Build"]
+      },
+      {
+        "label": "Check Contract Balance",
+        "command": ".vscode/contract-balance.sh",
+        "presentation": {
+          "panel": "shared",
+          "group": "cabal"
+        }
+      },
+      {
+        "label": "Check Dev Wallet Balance",
+        "command": ".vscode/wallet1-balance.sh",
+        "presentation": {
+          "panel": "shared",
+          "group": "cabal"
+        }
+      },
+      {
+        "label": "New Dev Wallet",
+        "command": ".vscode/new-dev-wallet.sh",
+        "presentation": {
+          "panel": "shared",
+          "group": "cabal"
+        }
+      },
+      {
+        "label": "Download Protocol Paramters",
+        "command": ".vscode/download-params.sh",
+        "presentation": {
+          "panel": "shared",
+          "group": "cabal",
+          "revealProblems": "never"
+        }
       }
     ]
   }

@@ -46,6 +46,7 @@ library
     , plutus-tx
     , plutus-tx-plugin
     , serialise
+    , aeson
 
 executable plutus-starter-kit
   import:           lang

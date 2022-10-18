@@ -14,6 +14,7 @@ import qualified Plutus.V1.Ledger.Scripts as Scripts
 import PlutusTx
 import PlutusTx.Prelude
 
+{-# INLINABLE wrap #-}
 wrap ::
   forall a b c.
   ( UnsafeFromData a,

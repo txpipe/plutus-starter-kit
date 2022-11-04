@@ -123,6 +123,12 @@ $ ./scripts/dev-wallet-balance.sh
 $ locktxin=0939be18d8583bbdd7309b4cfefd419c8900df0f84142149066ec2755c94a322#0
 ```
 
+We also need to retrieve some Protocol Parameters before building the transaction, in order to do so, execute the following script helper:
+
+```sh
+$ ./scripts/download-params.sh
+```
+
 Now we are finally ready to build the locking transaction. From inside your Cardano Workspace, open a terminal and execute the following command to build the unsigned Tx payload. 
 
 ```sh

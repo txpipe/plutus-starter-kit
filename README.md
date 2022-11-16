@@ -190,7 +190,7 @@ cardano-cli transaction build \
   --tx-in-redeemer-file assets/unlock.redeemer \
   --tx-in-collateral ${collateraltxin} \
   --change-address $(cat /assets/wallet1.addr) \
-  --protocol-params-file params.json \
+  --protocol-params-file assets/params.json \
   --out-file assets/unlock.tx
 ```
 

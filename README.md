@@ -189,15 +189,15 @@ cardano-cli transaction build \
   --tx-in-datum-file assets/lock.datum \
   --tx-in-redeemer-file assets/unlock.redeemer \
   --tx-in-collateral ${collateraltxin} \
-  --change-address $(cat /assets/wallet1.addr) \
-  --protocol-params-file params.json \
+  --change-address $(cat assets/wallet1.addr) \
+  --protocol-params-file assets/params.json \
   --out-file assets/unlock.tx
 ```
 
 ```sh
 cardano-cli transaction sign \
   --tx-body-file assets/unlock.tx \
-  --signing-key-file /assets/wallet1.skey \
+  --signing-key-file assets/wallet1.skey \
   --testnet-magic ${CARDANO_NODE_MAGIC} \
   --out-file assets/unlock.tx-signed
 ```

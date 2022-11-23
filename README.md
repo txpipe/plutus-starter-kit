@@ -4,7 +4,7 @@ This is a bare bones Plutus smart-contract template. The goal is to provide the 
 
 ## Dev Environment
 
-To build the script you'll need the Haskell toolchain (GCH, Cabal, etc) and several dependencies from IOHK repositories. There's also a requirement on the [secp256k1](https:/github.com:bitcoin-core/secp256k1.git) library. Once you've compiled the source code into a Plutus script, you'll need a fully-synced Cardano Node and the `cardano-cli` binary in order to submit example transactions to the Blockchain.
+To build the script you'll need the Haskell toolchain (GCH, Cabal, etc) and several dependencies from IOHK repositories. There's also a requirement on the [secp256k1](https://github.com/bitcoin-core/secp256k1.git) library. Once you've compiled the source code into a Plutus script, you'll need a fully-synced Cardano Node and the `cardano-cli` binary in order to submit example transactions to the Blockchain.
 
 If you don't want to install the required components yourself, you can use [Demeter.run](https://demeter.run) platform to create a cloud environment with access to common Cardano infrastrcuture. The following command will open this repo in a private, web-based VSCode IDE with all of the required Haskell toolchain, access to a shared Cardano Node and a pre-installed binary of the `cardano-cli`.
 

@@ -139,7 +139,7 @@ cardano-cli transaction build \
   --tx-in ${locktxin} \
   --tx-out $(cat assets/contract.addr)+1230000 \
   --tx-out-datum-hash ${scriptdatumhash} \
-  --protocol-params-file params.json \
+  --protocol-params-file assets/params.json \
   --out-file assets/lock.tx
 ```
 

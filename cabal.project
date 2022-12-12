@@ -136,6 +136,9 @@ package io-classes
 package cardano-ledger-alonzo-test
   tests: False
 
+package plutus-script-utils
+  haddock-options: "--optghc=-fplugin-opt PlutusTx.Plugin:defer-errors"
+
 -- ---------------------------------------------------------
 
 -- The two following one-liners will cut off / restore the remainder of this file (for nix-shell users):

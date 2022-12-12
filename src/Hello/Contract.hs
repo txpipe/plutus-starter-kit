@@ -13,14 +13,12 @@
 
 
 module Hello.Contract (validator, wrapped, serialized, hash, HelloDatum (..), HelloRedeemer (..)) where
-
-import Cardano.Api.Shelley (PlutusScript (..), PlutusScriptV1)
+import Cardano.Api.Shelley (PlutusScript (PlutusScriptSerialised))
 import Codec.Serialise (serialise)
 import qualified Data.ByteString.Lazy as BSL
 import qualified Data.ByteString.Short as BSS
 import Hello.Shared (validatorHash, wrap)
-import qualified Plutus.V1.Ledger.Scripts as Scripts
-import Plutus.V2.Ledger.Api (ScriptContext)
+import qualified Plutus.V2.Ledger.Api as PlutusV2
 import PlutusTx
 import PlutusTx.Prelude
 import Cardano.Api
@@ -31,26 +29,19 @@ PlutusTx.unstableMakeIsData ''HelloDatum
 newtype HelloRedeemer = HelloRedeemer Integer
 PlutusTx.unstableMakeIsData ''HelloRedeemer
 
-run :: HelloDatum -> HelloRedeemer -> ScriptContext -> Bool
+run :: HelloDatum -> HelloRedeemer -> PlutusV2.ScriptContext -> Bool
 run (HelloDatum datum) (HelloRedeemer redeemer) _ = redeemer < datum
 
-runWithoutContext :: HelloDatum -> HelloRedeemer -> Bool
-runWithoutContext (HelloDatum datum) (HelloRedeemer redeemer) = redeemer < datum
-
 -- Entry
-
-wrappedWithoutContext :: BuiltinData -> BuiltinData -> BuiltinData -> ()
-wrappedWithoutContext datum redeemer _ = check $ runWithoutContext (unsafeFromBuiltinData datum) (unsafeFromBuiltinData redeemer)
 
 wrapped :: BuiltinData -> BuiltinData -> BuiltinData -> ()
 wrapped = wrap run
 
-validator :: Scripts.Validator
--- validator = Scripts.mkValidatorScript $$(PlutusTx.compile [||wrapped||])
-validator = Scripts.mkValidatorScript $$(PlutusTx.compile [||wrappedWithoutContext||])
+validator :: PlutusV2.Validator
+validator = PlutusV2.mkValidatorScript $$(PlutusTx.compile [||wrapped||])
 
-serialized :: PlutusScript PlutusScriptV1
+serialized :: PlutusScript PlutusScriptV2
 serialized = PlutusScriptSerialised . BSS.toShort . BSL.toStrict . serialise $ validator
 
-hash :: Scripts.ValidatorHash
+hash :: PlutusV2.ValidatorHash
 hash = validatorHash validator

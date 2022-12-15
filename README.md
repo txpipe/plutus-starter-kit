@@ -32,9 +32,9 @@ When the command finishes, you should get a `assets/contract.plutus` file that c
 
 ```json
 {
-    "type": "PlutusScriptV1",
+    "type": "PlutusScriptV2",
     "description": "",
-    "cborHex": "5907c05907bd0100003232323232323232323..."
+    "cborHex": "5907c35907c001000..."
 }
 ```
 
@@ -180,6 +180,33 @@ b00...313     1        1230000 lovelace + TxOutDatumHash ScriptDataInBabbageEra 
 
 # Unlock Funds
 
+To unlock the assets, we need to prepare a transaction that consumes the UTxO from the contract address and including a redeemer that complies with the contraints defined by our validator.
+
+Query the contract balance once more, take the TxHash and TxIx and store it inside the variable `lockedtxin`.
+
+```sh
+$ ./scripts/contract-balance.sh
+ TxHash    TxIx        Amount
+--------------------------------------------------------------------------------------
+8af...ee4     0        1230000 lovelace + TxOutDatumHash ScriptDataInBabbageEra "923...4ec"
+
+$ lockedtxin=8afb82a260fc3c0fd4e5828da171b4ae52144669c2ec915df846cff6a628dee4#0
+```
+
+We also need to specify some collateral UTxO that the protocol can use in case our validator fails. For this, query the balance of your wallet again, select an available UTxO and store it in the variable `collateraltxin`. 
+
+```sh
+$ ./scripts/dev-wallet-balance.sh
+
+                           TxHash                                 TxIx   Amount
+---------------------------------------------------------------------------------
+0939be18d8583bbdd7309b4cfefd419c8900df0f84142149066ec2755c94a322     0   9980637126 lovelace
+9805cc2d7c08f8b99acd2d60d9cf1e3eb14b281e7f3f430f26a26f0927ff5fde     0   1060942 lovelace
+9ec2a9a546d8a9c7221be452e26278d2128cb39429d57a58b420598c0e9c2591     0   1060678 lovelace
+
+$ locktxin=0939be18d8583bbdd7309b4cfefd419c8900df0f84142149066ec2755c94a322#0
+```
+
 ```sh
 cardano-cli transaction build \
   --babbage-era \
@@ -188,11 +215,13 @@ cardano-cli transaction build \
   --tx-in-script-file assets/contract.plutus \
   --tx-in-datum-file assets/lock.datum \
   --tx-in-redeemer-file assets/unlock.redeemer \
-  --tx-in-collateral ${collateraltxin} \
   --change-address $(cat assets/wallet1.addr) \
+  --tx-in-collateral ${collateraltxin} \
   --protocol-params-file assets/params.json \
   --out-file assets/unlock.tx
 ```
+
+As usual, the next step consists of signing the transaction with our dev wallet key. From inside your Cardano Workspace, open a terminal and execute the following command:
 
 ```sh
 cardano-cli transaction sign \
@@ -202,6 +231,14 @@ cardano-cli transaction sign \
   --out-file assets/unlock.tx-signed
 ```
 
+Now we need to submit the signed transaction on-chain. From inside your Cardano Workspace, open a terminal and execute the following command:
+
 ```sh
 cardano-cli transaction submit --testnet-magic ${CARDANO_NODE_MAGIC} --tx-file assets/unlock.tx-signed
+```
+
+After a few seconds, assuming that the submission was successful, you should see the unlocked assets back in your dev wallet. Use the following command to check your wallet balance. You should see the new UTxO.
+
+```sh
+./scripts/dev-wallet-balance.sh
 ```
